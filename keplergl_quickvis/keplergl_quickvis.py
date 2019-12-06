@@ -108,7 +108,7 @@ class Visualize:
         # Make `names` iterable and of the same length as `data`
         if isinstance(names, list):
             # Already iterable, make sure they're the same length
-            msg = 'data and names are iterables different length'
+            msg = 'data and names are iterables of different length'
             assert len(data) == len(names), msg
         else:
             # `names` not iterable, make sure it's the same length as `data`
