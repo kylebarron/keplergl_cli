@@ -21,6 +21,8 @@ from keplergl_quickvis import Visualize
 Visualize(data)
 ```
 
+![Example gif](https://raw.githubusercontent.com/kylebarron/kepler_quickvis/master/assets/example.gif)
+
 ## Features
 
 -   One-line data visualization
