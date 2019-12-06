@@ -55,7 +55,8 @@ class Visualize:
             self.MAPBOX_API_KEY = api_key
         else:
             self.MAPBOX_API_KEY = os.getenv('MAPBOX_API_KEY')
-            msg = 'Warning: Mapbox API key not found. Map may not display.'
+            msg = 'Warning: api_key not provided and MAPBOX_API_KEY '
+            msg +='environment variable not set.\nMap may not display.'
             if self.MAPBOX_API_KEY is None:
                 print(msg)
 
