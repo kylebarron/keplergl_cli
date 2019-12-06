@@ -3,7 +3,7 @@ include CONTRIBUTING.rst
 include HISTORY.rst
 include LICENSE
 include README.rst
-include kepler_quickvis/keplergl_config.json
+include keplergl_quickvis/keplergl_config.json
 
 recursive-include tests *
 recursive-exclude * __pycache__
