@@ -2,19 +2,23 @@
 
 """The setup script."""
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
+with open('README.md') as f:
+    readme = f.read()
 
-with open('HISTORY.rst') as history_file:
+with open('CHANGELOG.md') as history_file:
     history = history_file.read()
 
-requirements = ['Click>=7.0', ]
+with open('requirements.txt') as requirements_file:
+    requirements = requirements_file.readlines()
+    requirements = [x[:-1] for x in requirements]
 
-setup_requirements = [ ]
+with open('requirements_dev.txt') as test_requirements_file:
+    test_requirements = test_requirements_file.readlines()
+    test_requirements = [x[:-1] for x in test_requirements]
 
-test_requirements = [ ]
+setup_requirements = ['setuptools >= 38.6.0', 'twine >= 1.11.0']
 
 setup(
     author="Kyle Barron",
@@ -44,6 +48,7 @@ setup(
     keywords='kepler_quickvis',
     name='kepler_quickvis',
     packages=find_packages(include=['kepler_quickvis', 'kepler_quickvis.*']),
+    package_data={'kepler_quickvis': ['keplergl_config.json']},
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
