@@ -27,14 +27,20 @@ SHAPELY_GEOJSON_CLASSES = [
     geojson.MultiPoint,
     geojson.MultiPolygon,
     geojson.Point,
-    geojson.Polygon,
-]
+    geojson.Polygon
+] # yapf: disable
 
 
 class Visualize:
     """Quickly visualize data in browser over Mapbox tiles with the help of the AMAZING kepler.gl.
     """
-    def __init__(self, data=None, names=None, read_only=False):
+    def __init__(
+            self,
+            data=None,
+            names=None,
+            read_only=False,
+            api_key=None,
+            style_url=None):
         """Visualize data using kepler.gl
 
         Args:
@@ -45,17 +51,22 @@ class Visualize:
         """
         super(Visualize, self).__init__()
 
-        self.MAPBOX_API_KEY = os.getenv('MAPBOX_API_KEY')
-        assert self.MAPBOX_API_KEY is not None, ''
+        if api_key is not None:
+            self.MAPBOX_API_KEY = api_key
+        else:
+            self.MAPBOX_API_KEY = os.getenv('MAPBOX_API_KEY')
+            msg = 'Warning: Mapbox API key not found. Map may not display.'
+            if self.MAPBOX_API_KEY is None:
+                print(msg)
 
-        self.map = KeplerGl(config=self.config)
+        config = self.config(style_url)
+        self.map = KeplerGl(config=config)
 
         if data is not None:
             self.add_data(data=data, names=names)
             self.render(read_only=read_only)
 
-    @property
-    def config(self):
+    def config(self, style_url=None):
         """Load kepler.gl config and insert Mapbox API Key"""
 
         import os
@@ -73,6 +84,11 @@ class Visualize:
                 'mapStyles']['aobtafp']['icon'].replace(
                     'access_token=redacted',
                     f'access_token={self.MAPBOX_API_KEY}')
+
+        # If style_url is not None, replace existing value
+        if style_url is not None:
+            keplergl_config['config']['config']['mapStyle']['mapStyles'][
+                'aobtafp']['url'] = style_url
 
         # Remove map state in the hope that it'll auto-center based on data
         # keplergl_config['config']['config'].pop('mapState')
