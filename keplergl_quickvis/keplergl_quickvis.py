@@ -2,11 +2,11 @@ import json
 import os
 import tempfile
 import webbrowser
-from pathlib import Path
 
 import geojson
 import shapely.geometry
 from keplergl import KeplerGl
+from pkg_resources import resource_filename
 from shapely.geometry import mapping
 
 SHAPELY_GEOJSON_CLASSES = [
@@ -56,7 +56,7 @@ class Visualize:
         else:
             self.MAPBOX_API_KEY = os.getenv('MAPBOX_API_KEY')
             msg = 'Warning: api_key not provided and MAPBOX_API_KEY '
-            msg +='environment variable not set.\nMap may not display.'
+            msg += 'environment variable not set.\nMap may not display.'
             if self.MAPBOX_API_KEY is None:
                 print(msg)
 
@@ -70,9 +70,8 @@ class Visualize:
     def config(self, style_url=None):
         """Load kepler.gl config and insert Mapbox API Key"""
 
-        import os
-        current_directory = os.path.dirname(os.path.abspath(__file__))
-        config_file = Path(current_directory) / 'keplergl_config.json'
+        config_file = resource_filename(
+            'keplergl_quickvis', 'keplergl_config.json')
 
         with open(config_file) as f:
             keplergl_config = json.load(f)
