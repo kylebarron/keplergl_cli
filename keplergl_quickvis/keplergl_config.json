@@ -33,7 +33,7 @@
         "isSplit": false
       },
       "mapStyle": {
-        "styleType": "aobtafp",
+        "styleType": "outdoors",
         "topLayerGroups": {},
         "visibleLayerGroups": {
           "label": true,
@@ -48,11 +48,11 @@
           185.2988331038727
         ],
         "mapStyles": {
-          "aobtafp": {
+          "outdoors": {
             "accessToken": "redacted",
             "custom": true,
             "icon": "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/-122.3391,37.7922,9,0,0/400x300?access_token=redacted&logo=false&attribution=false",
-            "id": "aobtafp",
+            "id": "outdoors",
             "label": "Mapbox Outdoors",
             "url": "mapbox://styles/mapbox/outdoors-v11"
           }
