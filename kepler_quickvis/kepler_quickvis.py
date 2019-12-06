@@ -4,7 +4,6 @@ import tempfile
 import webbrowser
 from pathlib import Path
 
-import dotenv
 import geojson
 import shapely.geometry
 from keplergl import KeplerGl
@@ -46,7 +45,6 @@ class Visualize:
         """
         super(Visualize, self).__init__()
 
-        dotenv.load_dotenv()
         self.MAPBOX_API_KEY = os.getenv('MAPBOX_API_KEY')
         assert self.MAPBOX_API_KEY is not None, ''
 
