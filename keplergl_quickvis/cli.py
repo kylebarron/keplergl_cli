@@ -1,10 +1,11 @@
 """Console script for kepler_quickvis."""
 import sys
+from pathlib import Path
 
 import click
-from keplergl_quickvis import Visualize
-from pathlib import Path
 import geopandas as gpd
+
+from keplergl_quickvis import Visualize
 
 
 @click.command()
