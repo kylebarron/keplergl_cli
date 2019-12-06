@@ -49,9 +49,9 @@
         ],
         "mapStyles": {
           "outdoors": {
-            "accessToken": "redacted",
+            "accessToken": "{MAPBOX_API_KEY}",
             "custom": true,
-            "icon": "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/-122.3391,37.7922,9,0,0/400x300?access_token=redacted&logo=false&attribution=false",
+            "icon": "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/-122.3391,37.7922,9,0,0/400x300?access_token={MAPBOX_API_KEY}&logo=false&attribution=false",
             "id": "outdoors",
             "label": "Mapbox Outdoors",
             "url": "mapbox://styles/mapbox/outdoors-v11"
