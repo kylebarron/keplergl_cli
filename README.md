@@ -21,7 +21,7 @@ from keplergl_quickvis import Visualize
 Visualize(data)
 ```
 
-![Example gif](https://raw.githubusercontent.com/kylebarron/kepler_quickvis/master/assets/example.gif)
+![Example gif](https://raw.githubusercontent.com/kylebarron/keplergl_quickvis/master/assets/example.gif)
 
 ## Features
 
