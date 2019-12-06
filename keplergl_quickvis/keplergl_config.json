@@ -12,7 +12,7 @@
             "enabled": true
           },
           "brush": {
-            "size": 0.5,
+            "size": 2,
             "enabled": false
           }
         },
@@ -33,7 +33,7 @@
         "isSplit": false
       },
       "mapStyle": {
-        "styleType": "outdoors",
+        "styleType": "streets",
         "topLayerGroups": {},
         "visibleLayerGroups": {
           "label": true,
@@ -48,6 +48,14 @@
           185.2988331038727
         ],
         "mapStyles": {
+          "streets": {
+            "accessToken": "{MAPBOX_API_KEY}",
+            "custom": true,
+            "icon": "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-122.3391,37.7922,9,0,0/400x300?access_token={MAPBOX_API_KEY}&logo=false&attribution=false",
+            "id": "streets",
+            "label": "Mapbox Streets",
+            "url": "mapbox://styles/mapbox/streets-v11"
+          },
           "outdoors": {
             "accessToken": "{MAPBOX_API_KEY}",
             "custom": true,
@@ -55,6 +63,38 @@
             "id": "outdoors",
             "label": "Mapbox Outdoors",
             "url": "mapbox://styles/mapbox/outdoors-v11"
+          },
+          "light": {
+            "accessToken": "{MAPBOX_API_KEY}",
+            "custom": true,
+            "icon": "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-122.3391,37.7922,9,0,0/400x300?access_token={MAPBOX_API_KEY}&logo=false&attribution=false",
+            "id": "light",
+            "label": "Mapbox Light",
+            "url": "mapbox://styles/mapbox/light-v10"
+          },
+          "dark": {
+            "accessToken": "{MAPBOX_API_KEY}",
+            "custom": true,
+            "icon": "https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/-122.3391,37.7922,9,0,0/400x300?access_token={MAPBOX_API_KEY}&logo=false&attribution=false",
+            "id": "dark",
+            "label": "Mapbox Dark",
+            "url": "mapbox://styles/mapbox/dark-v10"
+          },
+          "satellite": {
+            "accessToken": "{MAPBOX_API_KEY}",
+            "custom": true,
+            "icon": "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/-122.3391,37.7922,9,0,0/400x300?access_token={MAPBOX_API_KEY}&logo=false&attribution=false",
+            "id": "satellite",
+            "label": "Mapbox Satellite",
+            "url": "mapbox://styles/mapbox/satellite-v9"
+          },
+          "satellite-streets": {
+            "accessToken": "{MAPBOX_API_KEY}",
+            "custom": true,
+            "icon": "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/static/-122.3391,37.7922,9,0,0/400x300?access_token={MAPBOX_API_KEY}&logo=false&attribution=false",
+            "id": "satellite-streets",
+            "label": "Mapbox Satellite Streets",
+            "url": "mapbox://styles/mapbox/satellite-streets-v11"
           }
         }
       }

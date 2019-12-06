@@ -13,6 +13,7 @@ from keplergl_quickvis import Visualize
     '--reproject',
     is_flag=True,
     default=False,
+    show_default=True,
     help=
     'Attempt to reproject source data. This will only work if the source files include metadata on their projection'
 )
@@ -26,14 +27,15 @@ from keplergl_quickvis import Visualize
 @click.option(
     '--style',
     type=str,
-    default=None,
+    default='mapbox://styles/mapbox/outdoors-v11',
+    show_default='mapbox://styles/mapbox/outdoors-v11',
     help=
-    'Mapbox Style. For example "mapbox://styles/mapbox/streets-v11". The default is "mapbox://styles/mapbox/outdoors-v11"'
+    'Mapbox Style. For example "mapbox://styles/mapbox/streets-v11".'
 )
-@click.argument('files', nargs=-1, type=click.Path(exists=True))
+@click.argument('files', nargs=-1, required=True, type=click.Path(exists=True))
 def main(reproject, api_key, style, files):
     """Console script for keplergl_quickvis."""
-    vis = Visualize(api_key=api_key, style_url=style)
+    vis = Visualize(api_key=api_key, style=style)
 
     # For each file, try to load data with GeoPandas
     for file_name in files:
