@@ -10,6 +10,12 @@ work to figure out how to use it from a non-Jupyter Python environment.
 
 `keplergl_quickvis` is a simple wrapper to quickly get your geospatial objects from Python into kepler.gl in the browser. It's as simple as
 
+```
+keplergl_quickvis --style=outdoors data.geojson
+```
+
+from the command line, or from Python
+
 ```py
 from keplergl_quickvis import Visualize
 Visualize(data)
@@ -44,6 +50,42 @@ pip install keplergl_quickvis
 
 ## Usage
 
+### CLI
+
+The CLI is installed under the name `keplergl_quickvis`:
+
+```
+export MAPBOX_API_KEY=...
+keplergl_quickvis --style=outdoors data.geojson
+keplergl_quickvis --style=dark data1.geojson shapefile.shp geodatabase.gdb
+```
+
+You can supply data in any [vector format readable by GeoPandas/GDAL](https://gdal.org/drivers/vector/index.html).
+
+Supply `--help` to see the CLI's help menu:
+
+```
+> keplergl_quickvis --help
+
+Usage: keplergl_quickvis [OPTIONS] FILES...
+
+  Interactively view geospatial data using kepler.gl
+
+Options:
+  --reproject     Attempt to reproject source data to WGS84 (EPSG 4326). Data
+                  must be in WGS84 to be visualized correctly. This will only
+                  work if the source files include metadata on their
+                  projection  [default: False]
+  --api_key TEXT  Mapbox API Key. Must be provided on the command line or
+                  exist in the MAPBOX_API_KEY environment variable.
+  --style TEXT    Mapbox style. Accepted values are: streets, outdoors, light,
+                  dark, satellite, satellite-streets, or a custom style URL.
+                  [default: streets]
+  --help          Show this message and exit.
+```
+
+### Python API
+
 Simplest usage:
 
 ```py
@@ -71,7 +113,7 @@ html_path = vis.render(open_browser=True, read_only=False)
 **Visualize**
 
 ```py
-Visualize(data=None, names=None, read_only=False, api_key=None, style_url=None)
+Visualize(data=None, names=None, read_only=False, api_key=None, style=None)
 ```
 
 -   `data` (either `None`, a single data object, or a list of data objects):
@@ -103,18 +145,20 @@ Visualize(data=None, names=None, read_only=False, api_key=None, style_url=None)
     to get an API key. If not provided, the `MAPBOX_API_KEY` environment
     variable must be set, or the `style_url` must point to a `style.json` file
     that does not use Mapbox map tiles.
--   `style_url` (`string`): The [style URL](https://docs.mapbox.com/help/glossary/style-url/) of the basemap map style to use. This can be any standard Mapbox style string, a style string created from Mapbox Studio, or the url to JSON file that conforms to the [Mapbox Style Specification](https://docs.mapbox.com/mapbox-gl-js/style-spec/).
+-   `style` (`string`): The basemap style to use. Standard Mapbox options are:
 
-    The default value is `mapbox://styles/mapbox/outdoors-v11`.
+    -   `streets`
+    -   `outdoors`
+    -   `light`
+    -   `dark`
+    -   `satellite`
+    -   `satellite-streets`
 
-    Mapbox's [most common styles](https://docs.mapbox.com/api/maps/#mapbox-styles) are:
-
-    -   `mapbox://styles/mapbox/streets-v11`
-    -   `mapbox://styles/mapbox/outdoors-v11`
-    -   `mapbox://styles/mapbox/light-v10`
-    -   `mapbox://styles/mapbox/dark-v10`
-    -   `mapbox://styles/mapbox/satellite-v9`
-    -   `mapbox://styles/mapbox/satellite-streets-v11`
+    The default is `streets`. Alternatively, you can supply a path to a custom
+    style. A custom style created from Mapbox Studio should have a url that
+    starts with `mapbox://`. Otherwise, a custom style using third-party map
+    tiles should be a URL to a JSON file that conforms to the [Mapbox Style
+    Specification](https://docs.mapbox.com/mapbox-gl-js/style-spec/).
 
 **Visualize.add_data()**
 

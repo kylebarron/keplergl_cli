@@ -15,7 +15,7 @@ from keplergl_quickvis import Visualize
     default=False,
     show_default=True,
     help=
-    'Attempt to reproject source data. This will only work if the source files include metadata on their projection'
+    'Attempt to reproject source data to WGS84 (EPSG 4326). Data must be in WGS84 to be visualized correctly. This will only work if the source files include metadata on their projection'
 )
 @click.option(
     '--api_key',
@@ -27,14 +27,14 @@ from keplergl_quickvis import Visualize
 @click.option(
     '--style',
     type=str,
-    default='mapbox://styles/mapbox/outdoors-v11',
-    show_default='mapbox://styles/mapbox/outdoors-v11',
+    default='streets',
+    show_default=True,
     help=
-    'Mapbox Style. For example "mapbox://styles/mapbox/streets-v11".'
+    'Mapbox style. Accepted values are: streets, outdoors, light, dark, satellite, satellite-streets, or a custom style URL.'
 )
 @click.argument('files', nargs=-1, required=True, type=click.Path(exists=True))
 def main(reproject, api_key, style, files):
-    """Console script for keplergl_quickvis."""
+    """Interactively view geospatial data using kepler.gl"""
     vis = Visualize(api_key=api_key, style=style)
 
     # For each file, try to load data with GeoPandas
