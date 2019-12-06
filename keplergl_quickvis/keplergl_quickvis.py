@@ -65,7 +65,7 @@ class Visualize:
 
         if data is not None:
             self.add_data(data=data, names=names)
-            self.render(read_only=read_only)
+            self.html_path = self.render(read_only=read_only)
 
     def config(self, style_url=None):
         """Load kepler.gl config and insert Mapbox API Key"""
@@ -130,6 +130,6 @@ class Visualize:
         self.map.save_to_html(file_name=path, read_only=read_only)
 
         # Open saved HTML file in new tab in default browser
-        webbrowser.open_new_tab(path)
+        webbrowser.open_new_tab('file://' + path)
 
         return path
