@@ -33,13 +33,12 @@ to get an API key.
 pip install keplergl_quickvis
 ```
 
-This package has dependencies on `geojson` and `shapely`. If you get errors when
-installing this package through pip, it may be easier to first install `geojson`
-and `shapely` through Conda, then installing this package. I.e.:
+This package has dependencies on `geojson`, `shapely`, and `geopandas`. If you
+get errors when installing this package through pip, it may be easier to first
+install dependencies through Conda, then installing this package. I.e.:
 
 ```
-conda create -n environment_name python geojson shapely -c conda-forge
-source activate environment_name
+conda install geojson shapely geopandas -c conda-forge
 pip install keplergl_quickvis
 ```
 

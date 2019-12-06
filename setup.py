@@ -45,7 +45,7 @@ setup(
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    keywords='keplergl_quickvis',
+    keywords=['keplergl', 'mapbox'],
     name='keplergl_quickvis',
     packages=find_packages(include=['keplergl_quickvis', 'keplergl_quickvis.*']),
     package_data={'keplergl_quickvis': ['keplergl_config.json']},
