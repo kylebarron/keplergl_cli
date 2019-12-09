@@ -10,14 +10,6 @@ from keplergl_quickvis import Visualize
 
 @click.command()
 @click.option(
-    '--reproject',
-    is_flag=True,
-    default=False,
-    show_default=True,
-    help=
-    'Attempt to reproject source data to WGS84 (EPSG 4326). Data must be in WGS84 to be visualized correctly. This will only work if the source files include metadata on their projection'
-)
-@click.option(
     '--api_key',
     type=str,
     default=None,
@@ -33,7 +25,7 @@ from keplergl_quickvis import Visualize
     'Mapbox style. Accepted values are: streets, outdoors, light, dark, satellite, satellite-streets, or a custom style URL.'
 )
 @click.argument('files', nargs=-1, required=True, type=click.Path(exists=True))
-def main(reproject, api_key, style, files):
+def main(api_key, style, files):
     """Interactively view geospatial data using kepler.gl"""
     vis = Visualize(api_key=api_key, style=style)
 
@@ -41,8 +33,15 @@ def main(reproject, api_key, style, files):
     for file_name in files:
         layer_name = Path(file_name).stem
         gdf = gpd.read_file(file_name)
-        if reproject:
+
+        # Try to automatically reproject to epsg 4326
+        # For some reason, it takes forever to call gdf.crs, so I don't want to
+        # first check the crs, then reproject. Anyways, reprojecting from epsg
+        # 4326 to epsg 4326 should be instant
+        try:
             gdf = gdf.to_crs(epsg=4326)
+        except:
+            pass
 
         vis.add_data(gdf, layer_name)
 

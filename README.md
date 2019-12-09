@@ -74,10 +74,6 @@ Usage: keplergl_quickvis [OPTIONS] FILES...
   Interactively view geospatial data using kepler.gl
 
 Options:
-  --reproject     Attempt to reproject source data to WGS84 (EPSG 4326). Data
-                  must be in WGS84 to be visualized correctly. This will only
-                  work if the source files include metadata on their
-                  projection  [default: False]
   --api_key TEXT  Mapbox API Key. Must be provided on the command line or
                   exist in the MAPBOX_API_KEY environment variable.
   --style TEXT    Mapbox style. Accepted values are: streets, outdoors, light,
@@ -203,7 +199,7 @@ Visualize.render(open_browser=True, read_only=False)
 The most common reasons why a map is not displayed are:
 
 -   Missing Mapbox API Key: in order to display Mapbox-hosted maps, you need get [an API key from Mapbox](https://account.mapbox.com/access-tokens) to pass an API key
--   Data projection: Kepler.gl works only with data projected into standard WGS84 (latitude, longitude) coordinates. If you have your data in a projected coordinate system, first reproject your data into WGS84 (EPGS 4326), then try again
+-   Data projection: Kepler.gl works only with data projected into standard WGS84 (latitude, longitude) coordinates. If you have your data in a projected coordinate system, first reproject your data into WGS84 (EPGS 4326), then try again. The CLI attempts to automatically reproject into EPSG 4326, but the Python library doesn't.
 
 If your data seems to be "floating" above the map, this is likely because your
 input data have Z coordinates, so kepler.gl displays them in 3-dimensional space.
