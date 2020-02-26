@@ -1,4 +1,5 @@
 """Console script for keplergl_cli."""
+import json
 # Some imports are loaded conditionally later to try to make the CLI more
 # responsive
 import sys
@@ -15,7 +16,7 @@ from .keplergl_cli import Visualize
 # https://stackoverflow.com/a/45845513
 def get_stdin(ctx, param, value):
     if not value and not click.get_text_stream('stdin').isatty():
-        return click.get_text_stream('stdin').read().strip()
+        return (click.get_text_stream('stdin').read().strip(), )
     else:
         return value
 
@@ -44,7 +45,7 @@ def get_stdin(ctx, param, value):
     help=
     'Mapbox style. Accepted values are: streets, outdoors, light, dark, satellite, satellite-streets, or a custom style URL.'
 )
-@click.argument('files', nargs=-1, required=True, callback=get_stdin, type=str)
+@click.argument('files', nargs=-1, callback=get_stdin, type=str)
 def main(layer, api_key, style, files):
     """Interactively view geospatial data using kepler.gl"""
     vis = Visualize(api_key=api_key, style=style)
@@ -69,10 +70,16 @@ def main(layer, api_key, style, files):
 
         except OSError:
             # Otherwise, it should be GeoJSON
-            # Parse with geojson.loads to make sure
-            geojson.loads(item)
-            vis.add_data(item)
-            pass
+            # First try to parse entire stdin as single GeoJSON
+            # If this fails, assume it's newline delimited where each feature is
+            # on a single line
+            try:
+                vis.add_data(geojson.loads(item))
+
+            except json.JSONDecodeError:
+                lines = item.split('\n')
+                features = [geojson.loads(l) for l in lines]
+                vis.add_data(geojson.FeatureCollection(features))
 
     vis.render(open_browser=True, read_only=False)
     return 0

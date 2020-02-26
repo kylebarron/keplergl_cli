@@ -64,7 +64,7 @@ The CLI is installed under the name `kepler`:
 export MAPBOX_API_KEY=...
 kepler --style=outdoors data.geojson
 kepler --style=dark data1.geojson shapefile.shp geodatabase.gdb -l layer1 -l layer2
-cat data.geojson | kepler -
+cat data.geojson | kepler
 ```
 
 You can add `export MAPBOX_API_KEY` to your `.bashrc` or `.zshrc` to not have to
