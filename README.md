@@ -10,7 +10,8 @@ documentation](https://github.com/keplergl/kepler.gl/blob/master/docs/keplergl-j
 is almost entirely directed at use within Jupyter, and it took a little bit of
 work to figure out how to use it from a non-Jupyter Python environment.
 
-This package is a simple wrapper to quickly get your data into kepler.gl. It's as simple as
+This package is a simple wrapper to quickly get your data into kepler.gl. From
+the command line, it's as simple as:
 
 ```
 export MAPBOX_API_KEY=...
@@ -18,7 +19,7 @@ keplergl data1.geojson data2.shp data3.gdb
 cat data.geojson | keplergl -
 ```
 
-from the command line, or from Python
+from Python:
 
 ```py
 from keplergl_cli import Visualize
@@ -31,6 +32,7 @@ Visualize(data)
 
 -   One-line data visualization
 -   Automatically converts Shapely objects to GeoJSON
+-   Supports piped GeoJSON input
 -   No configuration needed
 
 ## Install
@@ -70,7 +72,9 @@ cat data.geojson | kepler
 You can add `export MAPBOX_API_KEY` to your `.bashrc` or `.zshrc` to not have to
 run that step each time.
 
-You can supply data in any [vector format readable by GeoPandas/GDAL](https://gdal.org/drivers/vector/index.html).
+You can supply filename paths to data in any [vector format readable by
+GeoPandas/GDAL](https://gdal.org/drivers/vector/index.html). Alternatively you
+can supply GeoJSON or newline-delimited GeoJSON on stdin.
 
 Supply `--help` to see the CLI's help menu:
 
