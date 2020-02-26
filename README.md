@@ -16,7 +16,7 @@ the command line, it's as simple as:
 ```
 export MAPBOX_API_KEY=...
 keplergl data1.geojson data2.shp data3.gdb
-cat data.geojson | keplergl -
+cat data.geojson | keplergl
 ```
 
 from Python:
