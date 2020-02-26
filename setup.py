@@ -39,6 +39,7 @@ setup(
     entry_points={
         'console_scripts': [
             'keplergl_quickvis=keplergl_quickvis.cli:main',
+            'kgvis=keplergl_quickvis.cli:main',
         ],
     },
     install_requires=requirements,
