@@ -1,12 +1,10 @@
-"""Console script for kepler_quickvis."""
+"""Console script for keplergl_cli."""
+# Some imports are loaded conditionally later to try to make the CLI more
+# responsive
 import sys
 from pathlib import Path
 
 import click
-import geojson
-import geopandas as gpd
-
-from keplergl_quickvis import Visualize
 
 
 # https://stackoverflow.com/a/45845513
@@ -36,6 +34,7 @@ def get_stdin(ctx, param, value):
 @click.argument('files', nargs=-1, required=True, callback=get_stdin, type=str)
 def main(api_key, style, files):
     """Interactively view geospatial data using kepler.gl"""
+    from .keplergl_cli import Visualize
     vis = Visualize(api_key=api_key, style=style)
 
     # For each file, try to load data with GeoPandas
@@ -53,6 +52,7 @@ def main(api_key, style, files):
 
         # Otherwise, it should be GeoJSON
         # Parse with geojson.loads to make sure
+        import geojson
         geojson.loads(item)
         vis.add_data(item)
 
@@ -65,6 +65,7 @@ def load_file(path):
 
     Loads data with GeoPandas; reprojects to 4326
     """
+    import geopandas as gpd
     layer_name = path.stem
     gdf = gpd.read_file(path)
 

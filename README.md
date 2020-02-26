@@ -1,4 +1,6 @@
-# keplergl_quickvis
+# keplergl_cli
+
+A CLI and Python API for quickly viewing geospatial data in Kepler.gl.
 
 ## Overview
 
@@ -8,20 +10,22 @@ documentation](https://github.com/keplergl/kepler.gl/blob/master/docs/keplergl-j
 is almost entirely directed at use within Jupyter, and it took a little bit of
 work to figure out how to use it from a non-Jupyter Python environment.
 
-`keplergl_quickvis` is a simple wrapper to quickly get your geospatial objects from Python into kepler.gl in the browser. It's as simple as
+This package is a simple wrapper to quickly get your data into kepler.gl. It's as simple as
 
 ```
-keplergl_quickvis --style=outdoors data.geojson
+keplergl --style=outdoors data.geojson data2.shp
+keplergl --style=outdoors data.geojson
+cat data.geojson | keplergl -
 ```
 
 from the command line, or from Python
 
 ```py
-from keplergl_quickvis import Visualize
+from keplergl_cli import Visualize
 Visualize(data)
 ```
 
-![Example gif](https://raw.githubusercontent.com/kylebarron/keplergl_quickvis/master/assets/example.gif)
+![Example gif](https://raw.githubusercontent.com/kylebarron/keplergl_cli/master/assets/example.gif)
 
 ## Features
 
@@ -38,28 +42,28 @@ to get an API key.
 **Package install**:
 
 ```
-pip install keplergl_quickvis
+pip install keplergl_cli
 ```
 
 This package has dependencies on `geojson`, `shapely`, and `geopandas`. If you
 get errors when installing this package through pip, it may be easier to first
-install dependencies through Conda, then installing this package. I.e.:
+install dependencies through Conda, then install this package. I.e.:
 
 ```
 conda install geojson shapely geopandas -c conda-forge
-pip install keplergl_quickvis
+pip install keplergl_cli
 ```
 
 ## Usage
 
 ### CLI
 
-The CLI is installed under the name `keplergl_quickvis`:
+The CLI is installed under the name `kepler`:
 
 ```
 export MAPBOX_API_KEY=...
-keplergl_quickvis --style=outdoors data.geojson
-keplergl_quickvis --style=dark data1.geojson shapefile.shp geodatabase.gdb
+kepler --style=outdoors data.geojson
+kepler --style=dark data1.geojson shapefile.shp geodatabase.gdb
 ```
 
 You can supply data in any [vector format readable by GeoPandas/GDAL](https://gdal.org/drivers/vector/index.html).
@@ -67,9 +71,9 @@ You can supply data in any [vector format readable by GeoPandas/GDAL](https://gd
 Supply `--help` to see the CLI's help menu:
 
 ```
-> keplergl_quickvis --help
+> kepler --help
 
-Usage: keplergl_quickvis [OPTIONS] FILES...
+Usage: kepler [OPTIONS] FILES...
 
   Interactively view geospatial data using kepler.gl
 
@@ -88,7 +92,7 @@ Simplest usage:
 
 ```py
 import geopandas as gpd
-from keplergl_quickvis import Visualize
+from keplergl_cli import Visualize
 
 # Create your geospatial objects
 gdf = gpd.GeoDataFrame(...)
@@ -101,7 +105,7 @@ Visualize([gdf, shapely_object, geojson_string], api_key=MAPBOX_API_KEY)
 More detail over the objects in your map:
 
 ```py
-from keplergl_quickvis import Visualize
+from keplergl_cli import Visualize
 vis = Visualize(api_key=MAPBOX_API_KEY)
 vis.add_data(data=data, names='name of layer')
 vis.add_data(data=data2, names='name of layer')

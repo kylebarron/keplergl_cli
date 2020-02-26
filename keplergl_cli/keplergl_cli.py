@@ -71,7 +71,7 @@ class Visualize:
         """Load kepler.gl config and insert Mapbox API Key"""
 
         config_file = resource_filename(
-            'keplergl_quickvis', 'keplergl_config.json')
+            'keplergl_cli', 'keplergl_config.json')
 
         # First load config file as string, replace {MAPBOX_API_KEY} with the
         # actual api key, then parse as JSON
