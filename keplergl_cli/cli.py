@@ -5,6 +5,11 @@ import sys
 from pathlib import Path
 
 import click
+import fiona
+import geojson
+import geopandas as gpd
+
+from .keplergl_cli import Visualize
 
 
 # https://stackoverflow.com/a/45845513
@@ -16,6 +21,14 @@ def get_stdin(ctx, param, value):
 
 
 @click.command()
+@click.option(
+    '-l',
+    '--layer',
+    type=str,
+    default=None,
+    required=False,
+    multiple=True,
+    help='Layer names. If not provided, will display all layers')
 @click.option(
     '--api_key',
     type=str,
@@ -32,9 +45,8 @@ def get_stdin(ctx, param, value):
     'Mapbox style. Accepted values are: streets, outdoors, light, dark, satellite, satellite-streets, or a custom style URL.'
 )
 @click.argument('files', nargs=-1, required=True, callback=get_stdin, type=str)
-def main(api_key, style, files):
+def main(layer, api_key, style, files):
     """Interactively view geospatial data using kepler.gl"""
-    from .keplergl_cli import Visualize
     vis = Visualize(api_key=api_key, style=style)
 
     # For each file, try to load data with GeoPandas
@@ -43,31 +55,39 @@ def main(api_key, style, files):
         try:
             path = Path(item)
             if path.exists():
-                gdf, layer_name = load_file(path)
-                vis.add_data(gdf, layer_name)
+                layers = fiona.listlayers(path)
+
+                if layer:
+                    layers = [x for x in layers if x in layer]
+
+                click.echo(f'Loading layers from {path}')
+                for l in layers:
+                    click.echo(l)
+                    vis.add_data(*load_file(path, l))
+                    # layer = ('NHDFlowline', )
                 continue
 
         except OSError:
+            # Otherwise, it should be GeoJSON
+            # Parse with geojson.loads to make sure
+            geojson.loads(item)
+            vis.add_data(item)
             pass
-
-        # Otherwise, it should be GeoJSON
-        # Parse with geojson.loads to make sure
-        import geojson
-        geojson.loads(item)
-        vis.add_data(item)
 
     vis.render(open_browser=True, read_only=False)
     return 0
 
 
-def load_file(path):
+def load_file(path, layer=None):
     """Load geospatial data at path
 
     Loads data with GeoPandas; reprojects to 4326
     """
-    import geopandas as gpd
-    layer_name = path.stem
-    gdf = gpd.read_file(path)
+    layer_name = layer or path.stem
+    gdf = gpd.read_file(path, layer=layer)
+
+    # Remove null geometries
+    gdf = gdf[gdf.geometry.notna()]
 
     # Try to automatically reproject to epsg 4326
     # For some reason, it takes forever to call gdf.crs, so I don't want
