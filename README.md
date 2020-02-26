@@ -63,7 +63,8 @@ The CLI is installed under the name `kepler`:
 ```
 export MAPBOX_API_KEY=...
 kepler --style=outdoors data.geojson
-kepler --style=dark data1.geojson shapefile.shp geodatabase.gdb
+kepler --style=dark data1.geojson shapefile.shp geodatabase.gdb -l layer1 -l layer2
+cat data.geojson | kepler -
 ```
 
 You can supply data in any [vector format readable by GeoPandas/GDAL](https://gdal.org/drivers/vector/index.html).
@@ -78,12 +79,13 @@ Usage: kepler [OPTIONS] FILES...
   Interactively view geospatial data using kepler.gl
 
 Options:
-  --api_key TEXT  Mapbox API Key. Must be provided on the command line or
-                  exist in the MAPBOX_API_KEY environment variable.
-  --style TEXT    Mapbox style. Accepted values are: streets, outdoors, light,
-                  dark, satellite, satellite-streets, or a custom style URL.
-                  [default: streets]
-  --help          Show this message and exit.
+  -l, --layer TEXT  Layer names. If not provided, will display all layers
+  --api_key TEXT    Mapbox API Key. Must be provided on the command line or
+                    exist in the MAPBOX_API_KEY environment variable.
+  --style TEXT      Mapbox style. Accepted values are: streets, outdoors,
+                    light, dark, satellite, satellite-streets, or a custom
+                    style URL.  [default: streets]
+  --help            Show this message and exit.
 ```
 
 ### Python API
@@ -124,7 +126,7 @@ Visualize(data=None, names=None, read_only=False, api_key=None, style=None)
     [GeoPandas](http://geopandas.org/) library, any geometry from the
     [Shapely](https://shapely.readthedocs.io/en/stable/manual.html) library, any
     object from the [GeoJSON](https://github.com/jazzband/geojson) library, or
-    any GeoJSON string or dictionary. You can also provide a CSV file as a
+    any GeoJSON `str` or `dict`. You can also provide a CSV file as a
     string or a Pandas DataFrame if the DataFrame has `Latitude` and `Longitude`
     columns. Full documentation on the accepted data formats is
     [here](https://github.com/keplergl/kepler.gl/blob/master/docs/keplergl-jupyter/user-guide.md#3-data-format).
@@ -206,4 +208,5 @@ The most common reasons why a map is not displayed are:
 -   Data projection: Kepler.gl works only with data projected into standard WGS84 (latitude, longitude) coordinates. If you have your data in a projected coordinate system, first reproject your data into WGS84 (EPGS 4326), then try again. The CLI attempts to automatically reproject into EPSG 4326, but the Python library doesn't.
 
 If your data seems to be "floating" above the map, this is likely because your
-input data have Z coordinates, so kepler.gl displays them in 3-dimensional space.
+input data have Z coordinates, so kepler.gl displays them in 3-dimensional
+space.
