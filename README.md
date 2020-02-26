@@ -13,8 +13,8 @@ work to figure out how to use it from a non-Jupyter Python environment.
 This package is a simple wrapper to quickly get your data into kepler.gl. It's as simple as
 
 ```
-keplergl --style=outdoors data.geojson data2.shp
-keplergl --style=outdoors data.geojson
+export MAPBOX_API_KEY=...
+keplergl data1.geojson data2.shp data3.gdb
 cat data.geojson | keplergl -
 ```
 
@@ -66,6 +66,9 @@ kepler --style=outdoors data.geojson
 kepler --style=dark data1.geojson shapefile.shp geodatabase.gdb -l layer1 -l layer2
 cat data.geojson | kepler -
 ```
+
+You can add `export MAPBOX_API_KEY` to your `.bashrc` or `.zshrc` to not have to
+run that step each time.
 
 You can supply data in any [vector format readable by GeoPandas/GDAL](https://gdal.org/drivers/vector/index.html).
 
