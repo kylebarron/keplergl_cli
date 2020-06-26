@@ -40,7 +40,9 @@ class Visualize:
             names=None,
             read_only=False,
             api_key=None,
-            style=None):
+            style=None,
+            config_file=None,
+            output_map=None):
         """Visualize data using kepler.gl
 
         Args:
@@ -48,6 +50,9 @@ class Visualize:
                 either None, a List of data objects, or a single data object. If
                 data is not None, then Visualize(data) will perform all steps,
                 including rendering and opening a browser.
+                `config_file` provides the path of config file.
+                'output_map` provides the location html file, if none then will
+                be dumped to temporaty files.
         """
         super(Visualize, self).__init__()
 
@@ -59,7 +64,11 @@ class Visualize:
             msg += 'environment variable not set.\nMap may not display.'
             if self.MAPBOX_API_KEY is None:
                 print(msg)
-
+        self.config_file = config_file
+        if output_map is not None:
+            self.path = os.path.join(output_map, 'vis.html')
+        else:
+            self.path = os.path.join(tempfile.mkdtemp(), 'vis.html')
         config = self.config(style=style)
         self.map = KeplerGl(config=config)
 
@@ -70,12 +79,11 @@ class Visualize:
     def config(self, style=None):
         """Load kepler.gl config and insert Mapbox API Key"""
 
-        config_file = resource_filename(
-            'keplergl_cli', 'keplergl_config.json')
+        # config_file = resource_filename('keplergl_cli', 'keplergl_config.json')
 
         # First load config file as string, replace {MAPBOX_API_KEY} with the
         # actual api key, then parse as JSON
-        with open(config_file) as f:
+        with open(self.config_file) as f:
             text = f.read()
 
         text = text.replace('{MAPBOX_API_KEY}', self.MAPBOX_API_KEY)
@@ -141,11 +149,9 @@ class Visualize:
     def render(self, open_browser=True, read_only=False):
         """Export kepler.gl map to HTML file and open in Chrome
         """
-        # Generate path to a temporary file
-        path = os.path.join(tempfile.mkdtemp(), 'vis.html')
-        self.map.save_to_html(file_name=path, read_only=read_only)
-
+        self.map.save_to_html(file_name=self.path, read_only=read_only)
         # Open saved HTML file in new tab in default browser
-        webbrowser.open_new_tab('file://' + path)
+        if open_browser:
+            webbrowser.open_new_tab('file://' + self.path)
 
-        return path
+        return self.path
