@@ -115,7 +115,7 @@ More detail over the objects in your map:
 
 ```py
 from keplergl_cli import Visualize
-vis = Visualize(api_key=MAPBOX_API_KEY)
+vis = Visualize(api_key=MAPBOX_API_KEY, output_map = PATH_TO_SAVE_HTML_MAP, config_file = PATH_TO_JSON_CONFIG_FILE)
 vis.add_data(data=data, names='name of layer')
 vis.add_data(data=data2, names='name of layer')
 html_path = vis.render(open_browser=True, read_only=False)
@@ -124,7 +124,7 @@ html_path = vis.render(open_browser=True, read_only=False)
 **Visualize**
 
 ```py
-Visualize(data=None, names=None, read_only=False, api_key=None, style=None)
+Visualize(data=None, names=None, read_only=False, api_key=None, style=None, config_file=None, output_map=None)
 ```
 
 -   `data` (either `None`, a single data object, or a list of data objects):
@@ -170,6 +170,8 @@ Visualize(data=None, names=None, read_only=False, api_key=None, style=None)
     starts with `mapbox://`. Otherwise, a custom style using third-party map
     tiles should be a URL to a JSON file that conforms to the [Mapbox Style
     Specification](https://docs.mapbox.com/mapbox-gl-js/style-spec/).
+-   `config_file` (`string`): Path to custom JSON configuration file for kepler.
+-   `output_map` (`string`): If path is provided then map is saved to this path.
 
 **Visualize.add_data()**
 
