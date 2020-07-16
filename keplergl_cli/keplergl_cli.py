@@ -66,7 +66,7 @@ class Visualize:
                 print(msg)
         self.config_file = config_file
         if output_map is not None:
-            self.path = os.path.join(output_map, 'vis.html')
+            self.path = output_map+'vis.html'
         else:
             self.path = os.path.join(tempfile.mkdtemp(), 'vis.html')
         config = self.config(style=style)
