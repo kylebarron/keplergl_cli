@@ -64,7 +64,10 @@ class Visualize:
             msg += 'environment variable not set.\nMap may not display.'
             if self.MAPBOX_API_KEY is None:
                 print(msg)
-        self.config_file = config_file
+        if config_file is None:
+            self.config_file = resource_filename('keplergl_cli', 'keplergl_config.json')
+        else:
+            self.config_file = config_file
         if output_map is not None:
             self.path = output_map+'vis.html'
         else:
