@@ -43,10 +43,14 @@ to get an API key.
 
 **Package install**:
 
+To install official version:
 ```
 pip install keplergl_cli
 ```
-
+To install this version, which has functionality to save map at custom locations and using custom config file:
+```
+pip install git+https://github.com/ikespand/keplergl_cli
+```
 This package has dependencies on `geojson`, `shapely`, and `geopandas`. If you
 get errors when installing this package through pip, it may be easier to first
 install dependencies through Conda, then install this package. I.e.:
