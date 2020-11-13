@@ -1,4 +1,4 @@
-keplergl>=0.1.2
+keplergl==0.2.0
 geojson>=2.5.0
 shapely>=1.6.4
 geopandas>=0.6.0
