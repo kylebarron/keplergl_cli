@@ -69,9 +69,9 @@ class Visualize:
         else:
             self.config_file = config_file
         if output_map is not None:
-            self.path = output_map+'vis.html'
+            self.path = output_map+'_vis.html'
         else:
-            self.path = os.path.join(tempfile.mkdtemp(), 'vis.html')
+            self.path = os.path.join(tempfile.mkdtemp(), 'defaultmap_vis.html')
         config = self.config(style=style)
         self.map = KeplerGl(config=config)
 
