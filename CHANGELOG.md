@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2 (2022-06-27)
+
+- Use `__geo_interface__` when possible
+- Respect `open_browser=False`
+- Fix centering map
+
 ## 0.3.1 (2020-02-26)
 
 - Fix for stdin
