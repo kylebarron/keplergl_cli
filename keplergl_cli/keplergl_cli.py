@@ -146,6 +146,7 @@ class Visualize:
         self.map.save_to_html(file_name=path, read_only=read_only, center_map=center_map)
 
         # Open saved HTML file in new tab in default browser
-        webbrowser.open_new_tab('file://' + path)
+        if open_browser:
+            webbrowser.open_new_tab('file://' + path)
 
         return path
