@@ -45,8 +45,9 @@ def get_stdin(ctx, param, value):
     help=
     'Mapbox style. Accepted values are: streets, outdoors, light, dark, satellite, satellite-streets, or a custom style URL.'
 )
+@click.option('--center-map/--no-center-map', type=bool, default=True, show_default=True, help='Whether to center map.')
 @click.argument('files', nargs=-1, callback=get_stdin, type=str)
-def main(layer, api_key, style, files):
+def main(layer, api_key, style, center_map, files):
     """Interactively view geospatial data using kepler.gl"""
     vis = Visualize(api_key=api_key, style=style)
 
@@ -81,7 +82,7 @@ def main(layer, api_key, style, files):
                 features = [geojson.loads(l) for l in lines]
                 vis.add_data(geojson.FeatureCollection(features))
 
-    vis.render(open_browser=True, read_only=False)
+    vis.render(open_browser=True, read_only=False, center_map=center_map)
     return 0
 
 
