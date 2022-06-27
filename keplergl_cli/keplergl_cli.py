@@ -133,7 +133,9 @@ class Visualize:
             names = [f'{name_stub}_{x}' for x in range(len(data))]
 
         for datum, name in zip(data, names):
-            if any(isinstance(datum, c) for c in SHAPELY_GEOJSON_CLASSES):
+            if getattr(datum, '__geo_interface__'):
+                datum = datum.__geo_interface__
+            elif any(isinstance(datum, c) for c in SHAPELY_GEOJSON_CLASSES):
                 datum = dict(mapping(datum))
 
             self.map.add_data(data=datum, name=name)
