@@ -2,6 +2,6 @@
 
 __author__ = """Kyle Barron"""
 __email__ = 'kylebarron2@gmail.com'
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 
 from .keplergl_cli import Visualize

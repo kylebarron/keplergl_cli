@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.3 (2022-06-27)
+
+- Revert usage of `__geo_interface__`
+
 ## 0.3.2 (2022-06-27)
 
 - Use `__geo_interface__` when possible
