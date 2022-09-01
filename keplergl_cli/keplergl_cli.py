@@ -42,7 +42,8 @@ class Visualize:
             api_key=None,
             style=None,
             config_file=None,
-            output_map=None):
+            output_map=None,
+            open_browser=False):
         """Visualize data using kepler.gl
 
         Args:
@@ -51,8 +52,9 @@ class Visualize:
                 data is not None, then Visualize(data) will perform all steps,
                 including rendering and opening a browser.
                 `config_file` provides the path of config file.
-                'output_map` provides the location html file, if none then will
+                `output_map` provides the location html file, if none then will
                 be dumped to temporaty files.
+                `open_browser` enables the browser opening if data is provided.
         """
         super(Visualize, self).__init__()
 
@@ -77,7 +79,7 @@ class Visualize:
 
         if data is not None:
             self.add_data(data=data, names=names)
-            self.html_path = self.render(read_only=read_only)
+            self.html_path = self.render(read_only=read_only,open_browser=open_browser)
 
     def config(self, style=None):
         """Load kepler.gl config and insert Mapbox API Key"""
@@ -154,7 +156,7 @@ class Visualize:
             self.map.add_data(data=datum, name=name)
 
     def render(self, open_browser=True, read_only=False, center_map=True):
-        """Export kepler.gl map to HTML file and open in Chrome
+        """Export kepler.gl map to HTML file and open in defauly system browser
         """
         self.map.save_to_html(file_name=self.path, read_only=read_only, center_map=center_map)
         # Open saved HTML file in new tab in default browser

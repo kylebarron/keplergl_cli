@@ -23,6 +23,15 @@
           "speed": 1
         }
       },
+      "mapState": {
+        "bearing": 0,
+        "dragRotate": false,
+        "latitude": 37.75043,
+        "longitude": -122.34679,
+        "pitch": 0,
+        "zoom": 9,
+        "isSplit": false
+      },
       "mapStyle": {
         "styleType": "streets",
         "topLayerGroups": {},
