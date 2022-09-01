@@ -144,17 +144,20 @@ class Visualize:
             names = [f'{name_stub}_{x}' for x in range(len(data))]
 
         for datum, name in zip(data, names):
+            # TODO: revisit using __geo_interface__
+            # This was reported to have issues when piping in data
+            # if getattr(datum, '__geo_interface__'):
+            #     datum = datum.__geo_interface__
             if any(isinstance(datum, c) for c in SHAPELY_GEOJSON_CLASSES):
                 datum = dict(mapping(datum))
 
             self.map.add_data(data=datum, name=name)
 
-    def render(self, open_browser=True, read_only=False):
+    def render(self, open_browser=True, read_only=False, center_map=True):
         """Export kepler.gl map to HTML file and open in Chrome
         """
-        self.map.save_to_html(file_name=self.path, read_only=read_only)
+        self.map.save_to_html(file_name=self.path, read_only=read_only, center_map=center_map)
         # Open saved HTML file in new tab in default browser
         if open_browser:
             webbrowser.open_new_tab('file://' + self.path)
-
         return self.path
