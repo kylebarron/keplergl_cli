@@ -40,7 +40,10 @@ class Visualize:
             names=None,
             read_only=False,
             api_key=None,
-            style=None):
+            style=None,
+            config_file=None,
+            output_map=None,
+            open_browser=False):
         """Visualize data using kepler.gl
 
         Args:
@@ -48,6 +51,10 @@ class Visualize:
                 either None, a List of data objects, or a single data object. If
                 data is not None, then Visualize(data) will perform all steps,
                 including rendering and opening a browser.
+                `config_file` provides the path of config file.
+                `output_map` provides the location html file, if none then will
+                be dumped to temporaty files.
+                `open_browser` enables the browser opening if data is provided.
         """
         super(Visualize, self).__init__()
 
@@ -59,23 +66,29 @@ class Visualize:
             msg += 'environment variable not set.\nMap may not display.'
             if self.MAPBOX_API_KEY is None:
                 print(msg)
-
+        if config_file is None:
+            self.config_file = resource_filename('keplergl_cli', 'keplergl_config.json')
+        else:
+            self.config_file = config_file
+        if output_map is not None:
+            self.path = output_map+'_vis.html'
+        else:
+            self.path = os.path.join(tempfile.mkdtemp(), 'defaultmap_vis.html')
         config = self.config(style=style)
         self.map = KeplerGl(config=config)
 
         if data is not None:
             self.add_data(data=data, names=names)
-            self.html_path = self.render(read_only=read_only)
+            self.html_path = self.render(read_only=read_only,open_browser=open_browser)
 
     def config(self, style=None):
         """Load kepler.gl config and insert Mapbox API Key"""
 
-        config_file = resource_filename(
-            'keplergl_cli', 'keplergl_config.json')
+        # config_file = resource_filename('keplergl_cli', 'keplergl_config.json')
 
         # First load config file as string, replace {MAPBOX_API_KEY} with the
         # actual api key, then parse as JSON
-        with open(config_file) as f:
+        with open(self.config_file) as f:
             text = f.read()
 
         text = text.replace('{MAPBOX_API_KEY}', self.MAPBOX_API_KEY)
@@ -143,14 +156,10 @@ class Visualize:
             self.map.add_data(data=datum, name=name)
 
     def render(self, open_browser=True, read_only=False, center_map=True):
-        """Export kepler.gl map to HTML file and open in Chrome
+        """Export kepler.gl map to HTML file and open in defauly system browser
         """
-        # Generate path to a temporary file
-        path = os.path.join(tempfile.mkdtemp(), 'vis.html')
-        self.map.save_to_html(file_name=path, read_only=read_only, center_map=center_map)
-
+        self.map.save_to_html(file_name=self.path, read_only=read_only, center_map=center_map)
         # Open saved HTML file in new tab in default browser
         if open_browser:
-            webbrowser.open_new_tab('file://' + path)
-
-        return path
+            webbrowser.open_new_tab('file://' + self.path)
+        return self.path

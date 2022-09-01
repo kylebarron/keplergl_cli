@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.4 (2022-09-01)
+
+- Arguments to save maps at user-defined location and use a custom configuration file
+- Respect `open_browser=False` even during the class instantiation with data
+
 ## 0.3.3 (2022-06-27)
 
 - Revert usage of `__geo_interface__`
